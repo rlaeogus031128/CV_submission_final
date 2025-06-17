@@ -12,19 +12,14 @@ def Make_LR_Scheduler(optimizer):
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optimizer,
         T_max=30,       # 주기 길이: 학습 epoch 수에 맞춰 조절
-        eta_min=1e-4    # 최소 learning rate
+        eta_min=1e-5    # 최소 learning rate
     )
     return scheduler
 
-def Make_Loss_Function(number_of_classes):
-    if number_of_classes == 1:
-        return nn.BCEWithLogitsLoss()
-    else:
-        return nn.CrossEntropyLoss()
 
 def Make_Loss_Function(number_of_classes):
     class DiceCELoss:
-        def __init__(self, weight=0.5, epsilon=1e-6, mode='multiclass'):
+        def __init__(self, weight=0.7, epsilon=1e-6, mode='multiclass'):
             self.weight = weight
             self.epsilon = epsilon
             self.mode = mode
